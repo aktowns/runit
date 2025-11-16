@@ -167,7 +167,12 @@ process is running in the service directory.
 .SH CUSTOMIZE CONTROL
 For each control character
 .I c
-except "d" and "x" sent to the control pipe,
+other than
+.BR o ,
+.BR d ,
+and
+.B x
+sent to the control pipe,
 .B runsv
 first checks if
 .I service\fR/control/\fIc
@@ -179,24 +184,28 @@ If the program exits with return code 0,
 .B runsv
 refrains from sending the service the corresponding signal.
 The command
-.I o
+.B o
 is always considered as command
-.IR u .
+.BR u .
 On command
-.I d
+.B d
 first
 .I service\fR/control/t
 is checked, and then
 .I service\fR/control/d.
 On command
-.I x
+.B x
 first
 .I service\fR/control/t
 is checked, and then
 .I service\fR/control/x.
 Specifically:
 .P
-If the service is running or paused, control characters "d" and "x" are handled as follows:
+If the service is running or paused, control characters
+.B d
+and
+.B x
+are handled as follows:
 .TP
 .B 1.
 .B runsv
