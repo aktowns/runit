@@ -34,8 +34,7 @@ below) can be used to start the service and to give other commands to <b>runsv</
 <p>
 If the directory <i>service</i>/log exists, <b>runsv</b> creates a pipe, redirects <i>service</i>/run&rsquo;s
 and <i>service</i>/finish&rsquo;s standard output to the pipe, switches to the directory
-<i>service</i>/log and starts ./run (and ./finish) exactly as described above for
-the <i>service</i> directory. The standard input of the log service is redirected
+<i>service</i>/log and starts ./run. The standard input of <i>service</i>/log/run is redirected
 to read from the pipe. <p>
 <b>runsv</b> maintains status information in a binary format
 (compatible to the daemontools&rsquo; <b>supervise</b> program) in <i>service</i>/supervise/status
