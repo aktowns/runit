@@ -15,11 +15,6 @@ What's runit, why is it that different
 <a href="#help">
 I need some help with runit, what should I do
 </a><br>
-<!--
-<a href="#service">
-What is a service, what a service daemon
-</a><br>
--->
 <a href="#license">
 What's the license, is runit free software
 </a><br>
@@ -30,11 +25,6 @@ How do I run a service under runit service supervision
 <a href="#create">
 How do I create a new service directory
 </a><br>
-<!--
-<a href="#log">
-What is a log service
-</a><br>
--->
 <a href="#createlog">
 How do I create a new service directory with an appendant log service
 </a><br>
@@ -57,11 +47,6 @@ How do I remove a service
 <a href="#depends">
 How do I make a service depend on another service
 </a><br>
-<!--
-<a href="#strongdepends">
-How can I make a service affect a dependant service
-</a><br>
--->
 <p>
 <a href="#runlevels">
 What about runlevels
@@ -107,18 +92,6 @@ If that still doesn't answer your question, try to search the
 supervision mailing list archive</a>.
 Finally, if this fails, feel free to post your question to the
 <a href="https://skarnet.org/lists/#supervision">supervision mailing list</a>.
-
-<!--
-<hr>
-<a name="service"><h3>
-What is a service, what a service daemon
-</h3></a>
-The runit documentation talks about services and service daemons.
-What actually is a service, and what a service daemon?
-<p>
-Answer:
--->
-
 <hr>
 <a name="license"><h3>
 What's the license, is runit free software
@@ -157,9 +130,8 @@ Service directories usually are placed into the <tt>/etc/sv/</tt>
 directory.
 Create a new directory for your service in <tt>/etc/sv/</tt>, put a
 <tt>./run</tt> script into it, and make the script executable.
-Note that for the use with runit,
-<a href="#service">service daemons</a> must not put themself into the
-background, but must run in the foreground.
+Note that for the use with runit, service daemons must not put themself
+into the background, but must run in the foreground.
 Here's a simple example for a <tt>getty</tt> service:
 <pre>
  $ cat /etc/sv/getty-2/run
@@ -171,19 +143,6 @@ Note the <tt>exec</tt> in the last line, it tells the shell that
 interprets the script to replace itself with the service daemon
 <tt>getty</tt>; this is necessary to make
 <a href="#control">controlling the service</a> work properly.
-
-<!--
-<hr>
-<a name="log"><h3>
-What is a log service
-</h3></a>
-Additionally to supervising a service runit can supervise an appendant
-log service.
-What does that mean?
-<p>
-Answer:
--->
-
 <hr>
 <a name="createlog"><h3>
 How do I create a new service directory with an appendant log service
@@ -315,24 +274,6 @@ daemon, so no logs get lost:
  $ 
 </pre>
 See also the <a href="dependencies.html">documentation</a>.
-
-<!--
-<hr>
-<a name="strongdepends"><h3>
-How can I make a service affect a dependant service
-</a></h3>
-<a href="#depends">This dependency</a> is not enough.
-I have a service that needs to be stopped or restarted, whenever a service
-it depends on stops or restarts.
-How can I tell runit about that a service affects a dependant service in
-such a way?
-<p>
-Answer:
-First think about whether you really need this, it almost never should be
-necessary.
-If you really need this,
--->
-
 <hr>
 <a name="runlevels"><h3>
 What about runlevels

@@ -1,3 +1,4 @@
+  * doc/faq.html: cleanup.
   * doc/index.html: remove references to dietlibc; doc/usedietlibc.html:
     remove.
   * man/runsv.8, doc/runsv.8.html: sync; clarify wording wrt log service and
