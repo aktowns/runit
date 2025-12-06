@@ -1,3 +1,12 @@
+  * chpst.dist, sv.dist, svlogd.dist: adapt.
+  * buffer_put.c: fix compilation warning: -Wempty-body (github/clan).
+  * buffer_put.c, byte.h, byte_copy.c, byte_diff.c: fix compilation
+    warnings: -Wdiscarded-qualifiers (github/clan).
+  * sv.c: fix compilation warning: -Wdangling-else (github/clan).
+  * byte_chr.c, byte_copy.c, byte_cr.c, byte_diff.c, byte_rchr.c, chpst.c,
+    str_chr.c, str_len.c, sv.c, svlogd.c: fix compilation warnings:
+    -Wmisleading-indentation (github/clan).
+  * TARGETS: remove prot.o (github/clan).
   * doc/benefits.html: spelling.
   * doc/faq.html: cleanup, spelling.
   * doc/usedietlibc.html: remove.

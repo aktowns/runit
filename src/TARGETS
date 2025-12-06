@@ -74,7 +74,6 @@ open_write.o
 openreadclose.o
 pathexec_env.o
 pathexec_run.o
-prot.o
 readclose.o
 scan_ulong.o
 seek_set.o
