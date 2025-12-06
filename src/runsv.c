@@ -93,25 +93,29 @@ void update_status(struct svdir *s) {
   unsigned long l;
   int fd;
   char status[20];
+  char *fstatus ="supervise/status";
+  char *fstatusnew ="supervise/status.new";
+#ifndef RUNSV_STATUS_BINARYONLY
   char bspace[64];
   buffer b;
   char spid[FMT_ULONG];
-  char *fstatus ="supervise/status";
-  char *fstatusnew ="supervise/status.new";
   char *fstat ="supervise/stat";
   char *fstatnew ="supervise/stat.new";
   char *fpid ="supervise/pid";
   char *fpidnew ="supervise/pid.new";
-
+#endif
   if (s->islog) {
     fstatus ="log/supervise/status";
     fstatusnew ="log/supervise/status.new";
+#ifndef RUNSV_STATUS_BINARYONLY
     fstat ="log/supervise/stat";
     fstatnew ="log/supervise/stat.new";
     fpid ="log/supervise/pid";
     fpidnew ="log/supervise/pid.new";
+#endif
   }
 
+#ifndef RUNSV_STATUS_BINARYONLY
   /* pid */
   if (pidchanged) {
     if ((fd =open_trunc(fpidnew)) == -1) {
@@ -166,6 +170,7 @@ void update_status(struct svdir *s) {
   close(fd);
   if (rename(fstatnew, fstat) == -1)
     warn2("unable to rename stat.new to ", fstat);
+#endif
 
   /* supervise compatibility */
   taia_pack(status, &s->start);

@@ -1,3 +1,5 @@
+  * runsv.c: omit stat, pid in ./supervise/ if RUNSV_STATUS_BINARYONLY is
+    defined.
   * chpst.dist, sv.dist, svlogd.dist: adapt.
   * buffer_put.c: fix compilation warning: -Wempty-body (github/clan).
   * buffer_put.c, byte.h, byte_copy.c, byte_diff.c: fix compilation
