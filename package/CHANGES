@@ -1,6 +1,7 @@
-  * doc/faq.html: cleanup.
-  * doc/index.html: remove references to dietlibc; doc/usedietlibc.html:
-    remove.
+  * doc/benefits.html: spelling.
+  * doc/faq.html: cleanup, spelling.
+  * doc/usedietlibc.html: remove.
+  * doc/index.html: remove references to dietlibc, spelling.
   * man/runsv.8, doc/runsv.8.html: sync; clarify wording wrt log service and
     custom control char o; style.
   * man/runit.8, man/sv.8, man/svlogd.8: typo, groff.
