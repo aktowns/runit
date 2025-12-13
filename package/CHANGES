@@ -1,3 +1,5 @@
+  * Makefile, TARGETS, byte.h: add byte_zero to byte.a.
+  * byte_zero.c: new.
   * runsv.c: omit stat, pid in ./supervise/ if RUNSV_STATUS_BINARYONLY is
     defined.
   * chpst.dist, sv.dist, svlogd.dist: adapt.

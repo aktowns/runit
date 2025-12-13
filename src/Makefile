@@ -124,12 +124,12 @@ buffer_read.o: buffer.h buffer_read.c compile
 buffer_write.o: buffer.h buffer_write.c compile
 	./compile buffer_write.c
 
-byte.a: byte_chr.o byte_copy.o byte_cr.o byte_diff.o byte_rchr.o \
+byte.a: byte_chr.o byte_copy.o byte_cr.o byte_diff.o byte_rchr.o byte_zero.o \
 fmt_uint.o fmt_uint0.o fmt_ulong.o makelib scan_ulong.o str_chr.o \
 str_diff.o str_len.o str_start.o
 	./makelib byte.a byte_chr.o byte_copy.o byte_cr.o byte_diff.o \
-	byte_rchr.o fmt_uint.o fmt_uint0.o fmt_ulong.o scan_ulong.o str_chr.o \
-	str_diff.o str_len.o str_start.o
+	byte_rchr.o byte_zero.o fmt_uint.o fmt_uint0.o fmt_ulong.o \
+	scan_ulong.o str_chr.o str_diff.o str_len.o str_start.o
 
 byte_chr.o: byte.h byte_chr.c compile
 	./compile byte_chr.c
@@ -145,6 +145,9 @@ byte_diff.o: byte.h byte_diff.c compile
 
 byte_rchr.o: byte.h byte_rchr.c compile
 	./compile byte_rchr.c
+
+byte_zero.o: byte.h byte_zero.c compile
+	./compile byte_zero.c
 
 choose: choose.sh warn-auto.sh
 	rm -f choose
