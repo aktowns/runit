@@ -1,3 +1,13 @@
+  * package/upgrade: remove utmpset program on upgrade.
+  * doc/replaceinit.html: remove getty finish scripts that use utmpset;
+    etc/debian/getty-tty5/finish, etc/freebsd/getty-ttyv4/finish,
+    etc/openbsd/getty-ttyC4/finish: remove, obsolete.
+  * doc/index.html, man/runit-init.8, man/runit.8, man/runsv.8,
+    man/runsvdir.8: remove reference to utmpset program.
+  * utmpset.c, utmpset.check, utmpset.dist, man/utmpset.8, tryuwtmp.c,
+    tryuwtmpx.c, uw_tmp.h?: remove, obsolete.
+  * Makefile, package/commands, src/Makefile, TARGETS: remove utmpset and
+    utmpx sysdep.
   * svlogd.c: fix uninitialized pointer read with -v and log directory
     mode r--.
   * Makefile, TARGETS, byte.h: add byte_zero to byte.a.
