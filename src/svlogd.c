@@ -371,7 +371,7 @@ void logdir_close(struct logdir *ld) {
   if (verbose) strerr_warn3(INFO, "close: ", ld->name, 0);
   close(ld->fddir);
   ld->fddir =-1;
-  if (ld->fdcur == -1) return; /* impossible */
+  if (ld->fdcur == -1) return;
   buffer_flush(&ld->b);
   while (fsync(ld->fdcur) == -1)
     pause2("unable to fsync current logfile", ld->name);
@@ -406,20 +406,21 @@ unsigned int ip4_scan(const char *s,char ip[4])
 unsigned int logdir_open(struct logdir *ld, const char *fn) {
   int i;
 
+  ld->name =(char*)fn;
   if ((ld->fddir =open_read(fn)) == -1) {
-    warn2("unable to open log directory", (char*)fn);
+    warn2("unable to open log directory", ld->name);
     return(0);
   }
   coe(ld->fddir);
   if (fchdir(ld->fddir) == -1) {
     logdir_close(ld);
-    warn2("unable to change directory", (char*)fn);
+    warn2("unable to change directory", ld->name);
     return(0);
   }
   ld->fdlock =open_append("lock");
   if ((ld->fdlock == -1) || (lock_exnb(ld->fdlock) == -1)) {
     logdir_close(ld);
-    warn2("unable to lock directory", (char*)fn);
+    warn2("unable to lock directory", ld->name);
     while (fchdir(fdwdir) == -1)
       pause1("unable to change to initial working directory");
     return(0);
@@ -430,7 +431,6 @@ unsigned int logdir_open(struct logdir *ld, const char *fn) {
   ld->sizemax =1000000;
   ld->nmax =ld->nmin =10;
   ld->tmax =0;
-  ld->name =(char*)fn;
   ld->ppid =0;
   ld->match ='+';
   ld->udpaddr.sin_family =AF_INET;
