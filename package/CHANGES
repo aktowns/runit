@@ -1,3 +1,4 @@
+  * sv.c: always write to control pipe, do not look at the status.
   * svlogd.c: fix uninitialized pointer read with -v and log directory
     mode r--.
   * Makefile, TARGETS, byte.h: add byte_zero to byte.a.
