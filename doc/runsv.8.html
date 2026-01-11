@@ -137,6 +137,9 @@ is checked, and then <i>service</i>/control/x. Specifically:<br>
 <dt><b>4.</b> </dt>
 <dd><b>runsv</b> checks whether <i>service</i>/control/d (or control/x) exists and is executable and runs it if yes. Its exit status is ignored.</dd>
 <p>
+The control program runs with the process id of <i>service</i>
+as its first argument, or the empty string if there's no pid.
+<p>
 The control of the optional log service cannot be customized.
 <h2><a name='sect5'>Signals</a></h2>
 If <b>runsv</b> receives a TERM signal, it

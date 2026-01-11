@@ -232,6 +232,10 @@ checks whether
 .I service\fR/control/d (or control/x)
 exists and is executable and runs it if yes. Its exit status is ignored.
 .P
+The control program runs with the process id of
+.I service
+as its first argument, or the empty string if there's no pid.
+.P
 The control of the optional log service cannot be customized.
 .SH SIGNALS
 If
