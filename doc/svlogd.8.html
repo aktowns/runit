@@ -13,7 +13,7 @@
 svlogd - runit&rsquo;s service logging daemon 
 <h2><a name='sect1'>Synopsis</a></h2>
 <b>svlogd</b> [-tttv] [-r <i>c</i>] [-R
-<i>xyz</i>] [-l <i>len</i>] [-b <i>buflen</i>] <i>logs</i> 
+<i>xyz</i>] [-l <i>len</i>] [-b <i>buflen</i>] [-L] <i>logs</i> 
 <h2><a name='sect2'>Description</a></h2>
 <i>logs</i> consists of one or more arguments,
 each specifying a directory. <p>
@@ -216,6 +216,10 @@ of the buffer <b>svlogd</b> uses when reading from standard input and writing
 to <i>logs</i> to <i>buflen</i>. Default is 1024. <i>buflen</i> must be greater than <i>len</i>. For <b>svlogd</b>
 instances that process a lot of data in short time, the buffer size should
 be increased to improve performance. </dd>
+
+<dt><b>-L</b> </dt>
+<dd>Lossy.  If <i>current</i> can not be written due to <i>ENOSPC</i>
+and other remedies have failed, discard log lines. </dd>
 
 <dt><b>-v</b> </dt>
 <dd>verbose. Print verbose messages to

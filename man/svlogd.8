@@ -11,6 +11,7 @@ svlogd \- runit's service logging daemon
 .IR len ]
 [\-b
 .IR buflen ]
+[\-L]
 .I logs
 .SH DESCRIPTION
 .I logs
@@ -402,6 +403,14 @@ Pattern matching applies to the first
 .I len
 characters of a log message only.
 Default is 1000.
+.TP
+.B \-L
+lossy.
+If
+.I current
+can not be written due to
+.I ENOSPC
+and other remedies have failed, discard log lines.
 .TP
 .B \-b \fIbuflen
 buffer size.
