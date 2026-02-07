@@ -1,3 +1,5 @@
+runit 2.3.1
+Sat, 07 Feb 2026 11:11:01 +0100
   * doc/dependencies.html: wording; cruft.
   * runsv.c, man/runsv.8: run control/? with service process id as argument.
   * sv.c: always write to control pipe, do not look at the status.
