@@ -29,9 +29,9 @@ and running, add <tt>sv start pinkd</tt> to <i>floyd</i>&rsquo;s
  exec floyd
 </pre>
 <p>
-When the <i>pinkd</i> service daemon crashes or is restarted for other
-reasons and the <i>floyd</i> daemon is unable to handle this, add <tt>sv hup
-floyd</tt> (or whatever the <i>floyd</i> daemon understands) to
+When the <i>pinkd</i> service daemon crashes or is restarted for some other
+reason and the <i>floyd</i> daemon is unable to handle this, add
+<tt>sv hup floyd</tt> (or whatever the <i>floyd</i> daemon understands) to
 <i>pinkd</i>&rsquo;s <tt>finish</tt> script to force its reload or restart.
 <pre>
  #!/bin/sh
@@ -60,7 +60,6 @@ For a mail service listening on localhost:25, this <tt>check</tt> script
 could be used
 <pre>
  #!/bin/sh
- set -e
  exec nc -z localhost 25
 </pre>
 <hr>
