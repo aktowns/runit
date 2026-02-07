@@ -219,7 +219,9 @@ be increased to improve performance. </dd>
 
 <dt><b>-L</b> </dt>
 <dd>lossy.  If <i>current</i> can not be written due to <i>ENOSPC</i>
-and other remedies have failed, discard log lines. </dd>
+and other remedies have failed, discard log lines.
+If the option is given twice, <b>svlogd</b> prints a warning to standard error
+whenever log data is lost. </dd>
 
 <dt><b>-v</b> </dt>
 <dd>verbose. Print verbose messages to

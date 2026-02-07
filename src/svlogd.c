@@ -359,6 +359,7 @@ int buffer_pwrite(int n, char *s, unsigned int len) {
     }
     if (errno) {
       if ((errno == ENOSPC) && lossy) {
+        if (lossy > 1) warn2("data loss", (dir +n)->name);
         return(len);
       }
       pause2("unable to write to current", (dir +n)->name);

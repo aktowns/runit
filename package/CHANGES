@@ -1,3 +1,4 @@
+  * svlogd.c, man/svlogd.8: -LL: print warning on data loss.
   * svlogd.c, man/svlogd.8: add option -L, lossy (thx github/teslamotors).
   * runsv.c, man/runsv.8: run control/? with service process id as argument.
   * sv.c: always write to control pipe, do not look at the status.
