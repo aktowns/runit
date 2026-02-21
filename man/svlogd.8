@@ -3,7 +3,7 @@
 svlogd \- runit's service logging daemon
 .SH SYNOPSIS
 .B svlogd
-[\-tttv] [\-r
+[\-tttvL] [\-r
 .IR c ]
 [\-R
 .IR xyz ]
@@ -402,6 +402,17 @@ Pattern matching applies to the first
 .I len
 characters of a log message only.
 Default is 1000.
+.TP
+.B \-L
+lossy.
+If
+.I current
+can not be written due to
+.I ENOSPC
+and other remedies have failed, discard log lines.
+If the option is given twice,
+.B svlogd
+prints a warning to standard error whenever log data is lost.
 .TP
 .B \-b \fIbuflen
 buffer size.
