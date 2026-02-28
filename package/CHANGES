@@ -1,3 +1,4 @@
+  * doc/*.html, man/*.8: replace; converted from markdown source.
   * svlogd.c, man/svlogd.8: -LL: print warning on data loss.
   * svlogd.c, man/svlogd.8: add option -L, lossy (thx github/teslamotors).
   * package/upgrade: remove utmpset program on upgrade.
