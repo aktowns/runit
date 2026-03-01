@@ -10,9 +10,11 @@
 
 ---
 
-This is a collection of `run` scripts for popular services to have them
-monitored by the [daemontools](https://cr.yp.to/daemontools.html) or
-[runit](https://smarden.org/runit/) package.
+This is a quite aged collection of `run` scripts for services to have
+them supervised by the [daemontools](https://cr.yp.to/daemontools.html)
+or [runit](https://smarden.org/runit/) package. It hasn't changed since
+2007 with regards to content. These days search engines provide better
+results than browsing this collection.
 
 Thanks go to the following people for contributing run scripts:
 [Alessandro Bono, Robin S. Socha, Claus Alboege, Paul Jarc, clemens
