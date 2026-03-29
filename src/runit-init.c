@@ -41,7 +41,9 @@ void runit_reboot () {
   _exit(0);
 }
 
-int main (int argc, const char * const *argv, char * const *envp) {
+extern char **environ;
+
+int main (int argc, const char * const *argv) {
   const char *prog[2];
 
   progname =*argv++;
@@ -51,7 +53,7 @@ int main (int argc, const char * const *argv, char * const *envp) {
     prog[0] ="runit";
 
     /* kernel is starting init, runit does the job. */
-    execve(RUNIT, (char *const *)prog, envp);
+    execve(RUNIT, (char *const *)prog, environ);
 
     /* serious error */
     strerr_die4sys(111, FATAL, "unable to start ", prog[0], ": ");

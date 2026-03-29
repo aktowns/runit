@@ -46,7 +46,10 @@ void sync_if_needed() {
   if (stat(NOSYNC, &s) == -1) sync();
 }
 
-int main (int argc, const char * const *argv, char * const *envp) {
+extern char **environ;
+
+int main (int argc, const char * const *argv) {
+  char * const *envp = environ;
   const char * prog[2];
   int pid, pid2;
   int wstat;
@@ -60,7 +63,10 @@ int main (int argc, const char * const *argv, char * const *envp) {
   int ttyfd;
   struct stat s;
 
+  /* wOS: exec creates a new process, so runit won't be PID 1 */
+#ifndef __wasi__
   if (getpid() != 1) strerr_die2x(111, FATAL, "must be run as process no 1.");
+#endif
   setsid();
 
   sig_block(sig_alarm);
@@ -137,8 +143,16 @@ int main (int argc, const char * const *argv, char * const *envp) {
       sig_unblock(sig_pipe);
       sig_unblock(sig_term);
             
-      strerr_warn3(INFO, "enter stage: ", stage[st], 0);
-      execve(*prog, (char *const *)prog, envp);
+      {
+        /* wOS: stage scripts are shell scripts; kernel has no shebang
+         * support, so exec via /bin/sh explicitly. */
+        const char *shprog[3];
+        shprog[0] = "/bin/sh";
+        shprog[1] = stage[st];
+        shprog[2] = 0;
+        strerr_warn3(INFO, "enter stage: ", stage[st], 0);
+        execve("/bin/sh", (char *const *)shprog, envp);
+      }
       strerr_die4sys(0, FATAL, "unable to start child: ", stage[st], ": ");
     }
 
@@ -231,10 +245,14 @@ int main (int argc, const char * const *argv, char * const *envp) {
           sleep(5);
         }
         if (!pid2) {
-          /* child */
-          strerr_warn3(INFO, "enter stage: ", prog[0], 0);
-          execve(*prog, (char *const *) prog, envp);
-          strerr_die4sys(0, FATAL, "unable to start child: ", prog[0], ": ");
+          /* child — wOS: exec via /bin/sh (no shebang support) */
+          const char *shprog2[3];
+          shprog2[0] = "/bin/sh";
+          shprog2[1] = *prog;
+          shprog2[2] = 0;
+          strerr_warn3(INFO, "enter stage: ", *prog, 0);
+          execve("/bin/sh", (char *const *)shprog2, envp);
+          strerr_die4sys(0, FATAL, "unable to start child: ", *prog, ": ");
         }
         if (wait_pid(&wstat, pid2) == -1)
           strerr_warn2(FATAL, "wait_pid: ", &strerr_sys);

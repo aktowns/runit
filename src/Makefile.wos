@@ -1,0 +1,100 @@
+# Makefile.wos — Build runit for wOS/WASM
+#
+# Usage: make -f Makefile.wos
+# Requires: WASI_SDK env var set (done by .envrc)
+
+# Resolve absolute path to this directory
+SRCDIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+USERLAND := $(abspath $(SRCDIR)/../../..)
+WOS_SDK := $(abspath $(USERLAND)/../wOS-sdk)
+CC := $(WOS_SDK)/bin/wasi-clang-wrapper.sh
+AR := $(WASI_SDK)/bin/llvm-ar
+
+CFLAGS := -Wno-error -I$(SRCDIR)
+
+# Programs to build
+PROGS := runit runit-init runsv runsvdir sv svlogd chpst
+
+# Library object files
+UNIX_OBJS := alloc.o alloc_re.o buffer.o buffer_0.o buffer_1.o buffer_2.o \
+	buffer_get.o buffer_put.o buffer_read.o buffer_write.o coe.o env.o \
+	error.o error_str.o fd_copy.o fd_move.o fifo.o lock_ex.o lock_exnb.o \
+	ndelay_off.o ndelay_on.o open_append.o open_read.o \
+	open_trunc.o open_write.o openreadclose.o pathexec_env.o \
+	pathexec_run.o readclose.o seek_set.o sgetopt.o sig.o \
+	sig_block.o sig_catch.o sig_pause.o stralloc_cat.o stralloc_catb.o \
+	stralloc_cats.o stralloc_eady.o stralloc_opyb.o stralloc_opys.o \
+	stralloc_pend.o strerr_die.o strerr_sys.o subgetopt.o wait_nohang.o \
+	wait_pid.o
+
+BYTE_OBJS := byte_chr.o byte_copy.o byte_cr.o byte_diff.o byte_rchr.o \
+	byte_zero.o fmt_uint.o fmt_uint0.o fmt_ulong.o scan_ulong.o \
+	str_chr.o str_diff.o str_len.o str_start.o
+
+TIME_OBJS := iopause.o tai_now.o tai_pack.o tai_sub.o tai_unpack.o \
+	taia_add.o taia_approx.o taia_frac.o taia_less.o taia_now.o \
+	taia_pack.o taia_sub.o taia_uint.o
+
+EXTRA_OBJS := pmatch.o fmt_ptime.o uidgid.o
+
+ALL_OBJS := $(UNIX_OBJS) $(BYTE_OBJS) $(TIME_OBJS) $(EXTRA_OBJS)
+
+.PHONY: all clean
+
+all: headers $(PROGS)
+
+# --- Configurable headers for wOS/WASI ---
+.PHONY: headers
+headers:
+	cp -f direntry.h2 direntry.h      # use <dirent.h>
+	cp -f hasflock.h2 hasflock.h      # +flock (stub in SDK returns success)
+	cp -f hasmkffo.h2 hasmkffo.h      # +mkfifo (real in SDK)
+	cp -f hassgact.h2 hassgact.h      # +sigaction (real in SDK)
+	cp -f hassgprm.h2 hassgprm.h      # +sigprocmask (real in SDK)
+	cp -f haswaitp.h2 haswaitp.h      # +waitpid
+	cp -f iopause.h1 iopause.h        # use select-based iopause (no poll)
+	cp -f reboot_system.h2 reboot_system.h  # standard reboot(cmd)
+	cp -f select.h2 select.h          # use <sys/select.h>
+	cp -f uint64.h1 uint64.h          # unsigned long long
+
+# --- Libraries ---
+unix.a: $(UNIX_OBJS)
+	$(AR) rcs $@ $^
+
+byte.a: $(BYTE_OBJS)
+	$(AR) rcs $@ $^
+
+time.a: $(TIME_OBJS)
+	$(AR) rcs $@ $^
+
+# --- Programs ---
+runit: runit.o unix.a byte.a time.a
+	$(CC) -o $@ $^
+
+runit-init: runit-init.o unix.a byte.a
+	$(CC) -o $@ $^
+
+runsv: runsv.o unix.a byte.a time.a
+	$(CC) -o $@ $^
+
+runsvdir: runsvdir.o unix.a byte.a time.a
+	$(CC) -o $@ $^
+
+sv: sv.o unix.a byte.a time.a
+	$(CC) -o $@ $^
+
+svlogd: svlogd.o pmatch.o fmt_ptime.o unix.a byte.a time.a
+	$(CC) -o $@ $^
+
+chpst: chpst.o uidgid.o unix.a byte.a
+	$(CC) -o $@ $^
+
+# --- Pattern rule ---
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# --- Clean ---
+clean:
+	rm -f *.o *.a $(PROGS)
+	rm -f direntry.h hasflock.h hasmkffo.h hassgact.h hassgprm.h
+	rm -f haswaitp.h iopause.h reboot_system.h select.h uint64.h

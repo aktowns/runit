@@ -1,6 +1,6 @@
 DESTDIR=
 
-PACKAGE=runit-2.3.1
+PACKAGE=runit-2.3.1-wos
 DIRS=doc man etc package src
 
 all: clean .doc .man $(PACKAGE).tar.gz
